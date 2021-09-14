@@ -18,7 +18,7 @@ func Sqrt(x float64) float64 {
 	i := 1
 	min_dif := 0.000000001
 	
-	for ; math.Abs(z*z-x)>min_dif || i > 1e6; i++ {
+	for ; math.Abs(x-z*z)>min_dif || i > 1e6; i++ {
 		z -= (z*z - x) / (2*z)
 	}
 	fmt.Printf("Stopped at %d iteration\n", i)
