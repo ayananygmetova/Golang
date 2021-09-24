@@ -4,7 +4,6 @@ import "fmt"
 
 type IPAddr [4]byte
 
-// TODO: Add a "String() string" method to IPAddr.
 func (ip IPAddr) String() string{
 	var newIPAddress string
 	for _, num := range ip {
