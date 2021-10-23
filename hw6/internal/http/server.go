@@ -36,25 +36,25 @@ func NewServer(ctx context.Context, address string, store store.Store) *Server {
 func (s *Server) basicHandler() chi.Router {
 	r := chi.NewRouter()
 
-	r.Post("/laptops", func(w http.ResponseWriter, r *http.Request) {
-		laptop := new(models.Laptop)
-		if err := json.NewDecoder(r.Body).Decode(laptop); err != nil {
+	r.Post("/products", func(w http.ResponseWriter, r *http.Request) {
+		product := new(models.Product)
+		if err := json.NewDecoder(r.Body).Decode(product); err != nil {
 			fmt.Fprintf(w, "Unknown err: %v", err)
 			return
 		}
 
-		s.store.Create(r.Context(), laptop)
+		s.store.Create(r.Context(), product)
 	})
-	r.Get("/laptops", func(w http.ResponseWriter, r *http.Request) {
-		laptops, err := s.store.All(r.Context())
+	r.Get("/products", func(w http.ResponseWriter, r *http.Request) {
+		products, err := s.store.All(r.Context())
 		if err != nil {
 			fmt.Fprintf(w, "Unknown err: %v", err)
 			return
 		}
 
-		render.JSON(w, r, laptops)
+		render.JSON(w, r, products)
 	})
-	r.Get("/laptops/{id}", func(w http.ResponseWriter, r *http.Request) {
+	r.Get("/products/{id}", func(w http.ResponseWriter, r *http.Request) {
 		idStr := chi.URLParam(r, "id")
 		id, err := strconv.Atoi(idStr)
 		if err != nil {
@@ -62,24 +62,24 @@ func (s *Server) basicHandler() chi.Router {
 			return
 		}
 
-		laptop, err := s.store.ByID(r.Context(), id)
+		product, err := s.store.ByID(r.Context(), id)
 		if err != nil {
 			fmt.Fprintf(w, "Unknown err: %v", err)
 			return
 		}
 
-		render.JSON(w, r, laptop)
+		render.JSON(w, r, product)
 	})
-	r.Put("/laptops", func(w http.ResponseWriter, r *http.Request) {
-		laptop := new(models.Laptop)
-		if err := json.NewDecoder(r.Body).Decode(laptop); err != nil {
+	r.Put("/products", func(w http.ResponseWriter, r *http.Request) {
+		product := new(models.Product)
+		if err := json.NewDecoder(r.Body).Decode(product); err != nil {
 			fmt.Fprintf(w, "Unknown err: %v", err)
 			return
 		}
 
-		s.store.Update(r.Context(), laptop)
+		s.store.Update(r.Context(), product)
 	})
-	r.Delete("/laptops/{id}", func(w http.ResponseWriter, r *http.Request) {
+	r.Delete("/products/{id}", func(w http.ResponseWriter, r *http.Request) {
 		idStr := chi.URLParam(r, "id")
 		id, err := strconv.Atoi(idStr)
 		if err != nil {

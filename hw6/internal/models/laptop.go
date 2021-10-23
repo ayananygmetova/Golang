@@ -1,11 +1,10 @@
 package models
 
-type Laptop struct {
-	ID           int    `json:"id"`
-	Name         string `json:"name"`
-	Manufacturer string `json:"manufacturer"`
-
-	Weight int `json:"weight"`
-	RAM    int `json:"ram"`
-	Cores  int `json:"cores"`
+type Product struct {
+	ID           int     `json:"id"`
+	Name         string  `json:"name"`
+	Manufacturer string  `json:"manufacturer"`
+	Description  string  `json:"description"`
+	Price        float32 `json:"price"`
+	Brand        string  `json:"brand"`
 }
