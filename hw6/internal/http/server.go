@@ -36,10 +36,6 @@ func NewServer(ctx context.Context, address string, store store.Store) *Server {
 func (s *Server) basicHandler() chi.Router {
 	r := chi.NewRouter()
 
-	// REST
-	// сущность/идентификатор
-	// /electronics/laptops
-	// /electronics/phones
 	r.Post("/laptops", func(w http.ResponseWriter, r *http.Request) {
 		laptop := new(models.Laptop)
 		if err := json.NewDecoder(r.Body).Decode(laptop); err != nil {
@@ -111,7 +107,7 @@ func (s *Server) Run() error {
 }
 
 func (s *Server) ListenCtxForGT(srv *http.Server) {
-	<-s.ctx.Done() // блокируемся, пока контекст приложения не отменен
+	<-s.ctx.Done()
 
 	if err := srv.Shutdown(context.Background()); err != nil {
 		log.Printf("[HTTP] Got err while shutting down^ %v", err)
@@ -122,6 +118,5 @@ func (s *Server) ListenCtxForGT(srv *http.Server) {
 }
 
 func (s *Server) WaitForGracefulTermination() {
-	// блок до записи или закрытия канала
 	<-s.idleConnsCh
 }
