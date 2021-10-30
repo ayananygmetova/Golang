@@ -7,10 +7,11 @@ import (
 )
 
 type DB struct {
-	categoriesRepo store.CategoriesRepository
-	productsRepo   store.ProductsRepository
-
-	mu *sync.RWMutex
+	categoriesRepo      store.CategoriesRepository
+	productsRepo        store.ProductsRepository
+	characteristicsRepo store.CharacteristicsRepository
+	propertiesRepo      store.PropertiesRepository
+	mu                  *sync.RWMutex
 }
 
 func NewDB() store.Store {
@@ -40,4 +41,25 @@ func (db *DB) Products() store.ProductsRepository {
 	}
 
 	return db.productsRepo
+}
+
+func (db *DB) Properties() store.PropertiesRepository {
+	if db.propertiesRepo == nil {
+		db.propertiesRepo = &PropertiesRepo{
+			data: make(map[int]*models.Property),
+			mu:   new(sync.RWMutex),
+		}
+	}
+
+	return db.propertiesRepo
+}
+func (db *DB) Characteristics() store.CharacteristicsRepository {
+	if db.characteristicsRepo == nil {
+		db.characteristicsRepo = &CharacteristicsRepo{
+			data: make(map[int]*models.Characteristics),
+			mu:   new(sync.RWMutex),
+		}
+	}
+
+	return db.characteristicsRepo
 }

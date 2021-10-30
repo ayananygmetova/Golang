@@ -169,7 +169,116 @@ func (s *Server) basicHandler() chi.Router {
 
 		s.store.Categories().Delete(r.Context(), id)
 	})
+	r.Post("/characteristics", func(w http.ResponseWriter, r *http.Request) {
+		characteristics := new(models.Characteristics)
+		if err := json.NewDecoder(r.Body).Decode(characteristics); err != nil {
+			fmt.Fprintf(w, "Unknown err: %v", err)
+			return
+		}
 
+		s.store.Characteristics().Create(r.Context(), characteristics)
+		render.JSON(w, r, characteristics)
+	})
+	r.Get("/characteristics", func(w http.ResponseWriter, r *http.Request) {
+		characteristics, err := s.store.Characteristics().All(r.Context())
+		if err != nil {
+			fmt.Fprintf(w, "Unknown err: %v", err)
+			return
+		}
+
+		render.JSON(w, r, characteristics)
+	})
+	r.Get("/characteristics/{id}", func(w http.ResponseWriter, r *http.Request) {
+		idStr := chi.URLParam(r, "id")
+		id, err := strconv.Atoi(idStr)
+		if err != nil {
+			fmt.Fprintf(w, "Unknown err: %v", err)
+			return
+		}
+
+		characteristics, err := s.store.Characteristics().ByID(r.Context(), id)
+		if err != nil {
+			fmt.Fprintf(w, "Unknown err: %v", err)
+			return
+		}
+
+		render.JSON(w, r, characteristics)
+	})
+	r.Put("/characteristics", func(w http.ResponseWriter, r *http.Request) {
+		characteristics := new(models.Characteristics)
+		if err := json.NewDecoder(r.Body).Decode(characteristics); err != nil {
+			fmt.Fprintf(w, "Unknown err: %v", err)
+			return
+		}
+
+		s.store.Characteristics().Update(r.Context(), characteristics)
+		render.JSON(w, r, characteristics)
+	})
+	r.Delete("/characteristics/{id}", func(w http.ResponseWriter, r *http.Request) {
+		idStr := chi.URLParam(r, "id")
+		id, err := strconv.Atoi(idStr)
+		if err != nil {
+			fmt.Fprintf(w, "Unknown err: %v", err)
+			return
+		}
+
+		s.store.Characteristics().Delete(r.Context(), id)
+	})
+	r.Post("/properties", func(w http.ResponseWriter, r *http.Request) {
+		property := new(models.Property)
+		if err := json.NewDecoder(r.Body).Decode(property); err != nil {
+			fmt.Fprintf(w, "Unknown err: %v", err)
+			return
+		}
+
+		s.store.Properties().Create(r.Context(), property)
+		render.JSON(w, r, property)
+	})
+	r.Get("/properties", func(w http.ResponseWriter, r *http.Request) {
+		properties, err := s.store.Properties().All(r.Context())
+		if err != nil {
+			fmt.Fprintf(w, "Unknown err: %v", err)
+			return
+		}
+
+		render.JSON(w, r, properties)
+	})
+	r.Get("/properties/{id}", func(w http.ResponseWriter, r *http.Request) {
+		idStr := chi.URLParam(r, "id")
+		id, err := strconv.Atoi(idStr)
+		if err != nil {
+			fmt.Fprintf(w, "Unknown err: %v", err)
+			return
+		}
+
+		property, err := s.store.Properties().ByID(r.Context(), id)
+		if err != nil {
+			fmt.Fprintf(w, "Unknown err: %v", err)
+			return
+		}
+
+		render.JSON(w, r, property)
+	})
+	r.Put("/properties", func(w http.ResponseWriter, r *http.Request) {
+		property := new(models.Property)
+		if err := json.NewDecoder(r.Body).Decode(property); err != nil {
+			fmt.Fprintf(w, "Unknown err: %v", err)
+			return
+		}
+
+		s.store.Properties().Update(r.Context(), property)
+		render.JSON(w, r, property)
+	})
+	r.Delete("/properties/{id}", func(w http.ResponseWriter, r *http.Request) {
+		idStr := chi.URLParam(r, "id")
+		id, err := strconv.Atoi(idStr)
+		if err != nil {
+			fmt.Fprintf(w, "Unknown err: %v", err)
+			return
+		}
+
+		s.store.Properties().Delete(r.Context(), id)
+	})
 	return r
 }
 
