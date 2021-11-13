@@ -27,4 +27,5 @@ type ProductsRepository interface {
 	ByID(ctx context.Context, id int) (*models.Product, error)
 	Update(ctx context.Context, product *models.Product) error
 	Delete(ctx context.Context, id int) error
+	ByCategory(ctx context.Context, id int) ([]*models.Product, error)
 }

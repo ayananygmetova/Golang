@@ -69,3 +69,10 @@ func (p ProductsRepository) Delete(ctx context.Context, id int) error {
 
 	return nil
 }
+func (p ProductsRepository) ByCategory(ctx context.Context, id int) ([]*models.Product, error) {
+	products := make([]*models.Product, 0)
+	if err := p.conn.Select(&products, "SELECT * FROM products WHERE category_id=$1", id); err != nil {
+		return nil, err
+	}
+	return products, nil
+}

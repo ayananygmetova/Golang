@@ -131,6 +131,21 @@ func (s *Server) basicHandler() chi.Router {
 			return
 		}
 	})
+	r.Get("/categories/{id}/products", func(w http.ResponseWriter, r *http.Request) {
+		idStr := chi.URLParam(r, "id")
+		id, err := strconv.Atoi(idStr)
+		if err != nil {
+			fmt.Fprintf(w, "Unknown err: %v", err)
+			return
+		}
+		products, err := s.store.Products().ByCategory(r.Context(), id)
+		if err != nil {
+			fmt.Fprintf(w, "Unknown err: %v", err)
+			return
+		}
+
+		render.JSON(w, r, products)
+	})
 
 	r.Post("/categories", func(w http.ResponseWriter, r *http.Request) {
 		category := new(models.Category)
