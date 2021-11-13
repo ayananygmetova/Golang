@@ -44,6 +44,12 @@ func (s *Server) basicHandler() chi.Router {
 			return
 		}
 
+		if _, c_err := s.store.Categories().ByID(r.Context(), product.CategoryId); c_err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			fmt.Fprintf(w, "Category with id %d doesn't exist", product.CategoryId)
+			return
+		}
+
 		if err := s.store.Products().Create(r.Context(), product); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			fmt.Fprintf(w, "DB err: %v", err)
@@ -86,11 +92,16 @@ func (s *Server) basicHandler() chi.Router {
 			fmt.Fprintf(w, "Unknown err: %v", err)
 			return
 		}
-
+		if _, c_err := s.store.Categories().ByID(r.Context(), product.CategoryId); c_err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			fmt.Fprintf(w, "Category with id %d doesn't exist", product.CategoryId)
+			return
+		}
 		err := validation.ValidateStruct(
 			product,
 			validation.Field(&product.ID, validation.Required),
 			validation.Field(&product.Name, validation.Required),
+			validation.Field(&product.CategoryId, validation.Required),
 		)
 		if err != nil {
 			w.WriteHeader(http.StatusUnprocessableEntity)
