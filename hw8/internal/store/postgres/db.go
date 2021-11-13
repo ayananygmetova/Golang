@@ -1,7 +1,7 @@
 package postgres
 
 import (
-	"hw7/internal/store"
+	"hw8/internal/store"
 
 	_ "github.com/jackc/pgx/stdlib"
 	"github.com/jmoiron/sqlx"

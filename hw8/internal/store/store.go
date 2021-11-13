@@ -2,7 +2,7 @@ package store
 
 import (
 	"context"
-	"hw7/internal/models"
+	"hw8/internal/models"
 )
 
 type Store interface {

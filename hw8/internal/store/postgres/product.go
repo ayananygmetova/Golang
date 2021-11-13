@@ -2,8 +2,8 @@ package postgres
 
 import (
 	"context"
-	"hw7/internal/models"
-	"hw7/internal/store"
+	"hw8/internal/models"
+	"hw8/internal/store"
 
 	"github.com/jmoiron/sqlx"
 )

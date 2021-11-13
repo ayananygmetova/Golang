@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 
-	"hw7/internal/http"
-	"hw7/internal/store/postgres"
+	"hw8/internal/http"
+	"hw8/internal/store/postgres"
 )
 
 func main() {
