@@ -9,3 +9,7 @@ type Product struct {
 	Brand        string  `json:"brand" db:"brand"`
 	CategoryId   int     `json:"category_id"  db:"category_id"`
 }
+
+type ProductsFilter struct {
+	Query *string `json:"query"`
+}

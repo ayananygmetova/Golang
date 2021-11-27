@@ -12,6 +12,7 @@ type RedisCache struct {
 	client     *redis.Client
 	expires    time.Duration
 	categories cache.CategoriesCacheRepo
+	products   cache.ProductsCacheRepo
 }
 
 func NewRedisCache(host string, db int, exp time.Duration) cache.Cache {

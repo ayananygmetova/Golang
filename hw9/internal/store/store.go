@@ -10,7 +10,7 @@ type Store interface {
 	Close() error
 
 	Categories() CategoriesRepository
-	// Products() ProductsRepository
+	Products() ProductsRepository
 }
 
 type CategoriesRepository interface {
@@ -21,11 +21,11 @@ type CategoriesRepository interface {
 	Delete(ctx context.Context, id int) error
 }
 
-// type ProductsRepository interface {
-// 	Create(ctx context.Context, product *models.Product) error
-// 	All(ctx context.Context) ([]*models.Product, error)
-// 	ByID(ctx context.Context, id int) (*models.Product, error)
-// 	Update(ctx context.Context, product *models.Product) error
-// 	Delete(ctx context.Context, id int) error
-// 	ByCategory(ctx context.Context, id int) ([]*models.Product, error)
-// }
+type ProductsRepository interface {
+	Create(ctx context.Context, product *models.Product) error
+	All(ctx context.Context, filter *models.ProductsFilter) ([]*models.Product, error)
+	ByID(ctx context.Context, id int) (*models.Product, error)
+	Update(ctx context.Context, product *models.Product) error
+	Delete(ctx context.Context, id int) error
+	// ByCategory(ctx context.Context, id int) ([]*models.Product, error)
+}

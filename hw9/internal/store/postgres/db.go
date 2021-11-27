@@ -11,7 +11,7 @@ type DB struct {
 	conn *sqlx.DB
 
 	categories store.CategoriesRepository
-	// products   store.ProductsRepository
+	products   store.ProductsRepository
 }
 
 func (db *DB) Connect(url string) error {
