@@ -9,9 +9,10 @@ import (
 )
 
 type ProductRepo struct {
-	data           map[int]*models.Product
-	categoriesRepo store.CategoriesRepository
-	mu             *sync.RWMutex
+	data                map[int]*models.Product
+	categoriesRepo      store.CategoriesRepository
+	characteristicsRepo store.CharacteristicsRepository
+	mu                  *sync.RWMutex
 }
 
 func (db *ProductRepo) Create(ctx context.Context, product *models.Product) (*models.Product, error) {

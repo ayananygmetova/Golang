@@ -2,14 +2,16 @@ package inmemory
 
 import (
 	"Midterm/internal/models"
+	"Midterm/internal/store"
 	"context"
 	"fmt"
 	"sync"
 )
 
 type CharacteristicsRepo struct {
-	data map[int]*models.Characteristics
-	mu   *sync.RWMutex
+	data           map[int]*models.Characteristics
+	propertiesRepo store.PropertiesRepository
+	mu             *sync.RWMutex
 }
 
 func (db *CharacteristicsRepo) Create(ctx context.Context, characteristics *models.Characteristics) (*models.Characteristics, error) {

@@ -34,9 +34,10 @@ func (db *DB) Categories() store.CategoriesRepository {
 func (db *DB) Products() store.ProductsRepository {
 	if db.productsRepo == nil {
 		db.productsRepo = &ProductRepo{
-			data:           make(map[int]*models.Product),
-			categoriesRepo: db.Categories(),
-			mu:             new(sync.RWMutex),
+			data:                make(map[int]*models.Product),
+			categoriesRepo:      db.Categories(),
+			characteristicsRepo: db.Characteristics(),
+			mu:                  new(sync.RWMutex),
 		}
 	}
 
@@ -56,8 +57,9 @@ func (db *DB) Properties() store.PropertiesRepository {
 func (db *DB) Characteristics() store.CharacteristicsRepository {
 	if db.characteristicsRepo == nil {
 		db.characteristicsRepo = &CharacteristicsRepo{
-			data: make(map[int]*models.Characteristics),
-			mu:   new(sync.RWMutex),
+			data:           make(map[int]*models.Characteristics),
+			propertiesRepo: db.Properties(),
+			mu:             new(sync.RWMutex),
 		}
 	}
 
