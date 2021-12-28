@@ -12,6 +12,7 @@ type Store interface {
 	Categories() CategoriesRepository
 	Products() ProductsRepository
 	Properties() PropertiesRepository
+	Characteristics() CharacteristicsRepository
 }
 
 type CategoriesRepository interface {
