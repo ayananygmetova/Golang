@@ -40,121 +40,18 @@ func NewServer(ctx context.Context, opts ...ServerOption) *Server {
 
 func (s *Server) basicHandler() chi.Router {
 	r := chi.NewRouter()
-	// r.Post("/products", func(w http.ResponseWriter, r *http.Request) {
-	// 	product := new(models.Product)
-	// 	if err := json.NewDecoder(r.Body).Decode(product); err != nil {
-	// 		w.WriteHeader(http.StatusUnprocessableEntity)
-	// 		fmt.Fprintf(w, "Unknown err: %v", err)
-	// 		return
-	// 	}
-
-	// 	if _, c_err := s.store.Categories().ByID(r.Context(), product.CategoryId); c_err != nil {
-	// 		w.WriteHeader(http.StatusInternalServerError)
-	// 		fmt.Fprintf(w, "Category with id %d doesn't exist", product.CategoryId)
-	// 		return
-	// 	}
-
-	// 	if err := s.store.Products().Create(r.Context(), product); err != nil {
-	// 		w.WriteHeader(http.StatusInternalServerError)
-	// 		fmt.Fprintf(w, "DB err: %v", err)
-	// 		return
-	// 	}
-
-	// 	w.WriteHeader(http.StatusCreated)
-	// })
-	// r.Get("/products", func(w http.ResponseWriter, r *http.Request) {
-	// 	products, err := s.store.Products().All(r.Context())
-	// 	if err != nil {
-	// 		fmt.Fprintf(w, "Unknown err: %v", err)
-	// 		return
-	// 	}
-
-	// 	render.JSON(w, r, products)
-	// })
-	// r.Get("/products/{id}", func(w http.ResponseWriter, r *http.Request) {
-	// 	idStr := chi.URLParam(r, "id")
-	// 	id, err := strconv.Atoi(idStr)
-	// 	if err != nil {
-	// 		w.WriteHeader(http.StatusBadRequest)
-	// 		fmt.Fprintf(w, "Unknown err: %v", err)
-	// 		return
-	// 	}
-
-	// 	product, err := s.store.Products().ByID(r.Context(), id)
-	// 	if err != nil {
-	// 		w.WriteHeader(http.StatusInternalServerError)
-	// 		fmt.Fprintf(w, "Unknown err: %v", err)
-	// 		return
-	// 	}
-
-	// 	render.JSON(w, r, product)
-	// })
-	// r.Put("/products", func(w http.ResponseWriter, r *http.Request) {
-	// 	product := new(models.Product)
-	// 	if err := json.NewDecoder(r.Body).Decode(product); err != nil {
-	// 		w.WriteHeader(http.StatusUnprocessableEntity)
-	// 		fmt.Fprintf(w, "Unknown err: %v", err)
-	// 		return
-	// 	}
-	// 	if _, c_err := s.store.Categories().ByID(r.Context(), product.CategoryId); c_err != nil {
-	// 		w.WriteHeader(http.StatusInternalServerError)
-	// 		fmt.Fprintf(w, "Category with id %d doesn't exist", product.CategoryId)
-	// 		return
-	// 	}
-	// 	err := validation.ValidateStruct(
-	// 		product,
-	// 		validation.Field(&product.ID, validation.Required),
-	// 		validation.Field(&product.Name, validation.Required),
-	// 		validation.Field(&product.CategoryId, validation.Required),
-	// 	)
-	// 	if err != nil {
-	// 		w.WriteHeader(http.StatusUnprocessableEntity)
-	// 		fmt.Fprintf(w, "Unknown err: %v", err)
-	// 		return
-	// 	}
-
-	// 	if err := s.store.Products().Update(r.Context(), product); err != nil {
-	// 		w.WriteHeader(http.StatusInternalServerError)
-	// 		fmt.Fprintf(w, "DB err: %v", err)
-	// 		return
-	// 	}
-	// 	render.JSON(w, r, product)
-	// })
-	// r.Delete("/products/{id}", func(w http.ResponseWriter, r *http.Request) {
-	// 	idStr := chi.URLParam(r, "id")
-	// 	id, err := strconv.Atoi(idStr)
-	// 	if err != nil {
-	// 		w.WriteHeader(http.StatusBadRequest)
-	// 		fmt.Fprintf(w, "Unknown err: %v", err)
-	// 		return
-	// 	}
-
-	// 	if err := s.store.Products().Delete(r.Context(), id); err != nil {
-	// 		w.WriteHeader(http.StatusInternalServerError)
-	// 		fmt.Fprintf(w, "DB err: %v", err)
-	// 		return
-	// 	}
-	// })
-	// r.Get("/categories/{id}/products", func(w http.ResponseWriter, r *http.Request) {
-	// 	idStr := chi.URLParam(r, "id")
-	// 	id, err := strconv.Atoi(idStr)
-	// 	if err != nil {
-	// 		fmt.Fprintf(w, "Unknown err: %v", err)
-	// 		return
-	// 	}
-	// 	products, err := s.store.Products().ByCategory(r.Context(), id)
-	// 	if err != nil {
-	// 		fmt.Fprintf(w, "Unknown err: %v", err)
-	// 		return
-	// 	}
-
-	// 	render.JSON(w, r, products)
-	// })
 	categoriesResource := resources.NewCategoriesResource(s.store, s.broker, s.cache)
 	r.Mount("/categories", categoriesResource.Routes())
 
 	productsResource := resources.NewProductsResource(s.store, s.broker, s.cache)
 	r.Mount("/products", productsResource.Routes())
+
+	propertiesResource := resources.NewPropertyResource(s.store, s.broker, s.cache)
+	r.Mount("/properties", propertiesResource.Routes())
+
+	characteristicsResource := resources.NewCharacteristiccResource(s.store, s.broker, s.cache)
+	r.Mount("/characteristics", characteristicsResource.Routes())
+
 	return r
 }
 

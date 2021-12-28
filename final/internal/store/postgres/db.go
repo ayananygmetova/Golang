@@ -10,8 +10,10 @@ import (
 type DB struct {
 	conn *sqlx.DB
 
-	categories store.CategoriesRepository
-	products   store.ProductsRepository
+	categories      store.CategoriesRepository
+	products        store.ProductsRepository
+	properties      store.PropertiesRepository
+	characteristics store.CharacteristicsRepository
 }
 
 func (db *DB) Connect(url string) error {
