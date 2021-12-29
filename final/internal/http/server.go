@@ -52,6 +52,9 @@ func (s *Server) basicHandler() chi.Router {
 	characteristicsResource := resources.NewCharacteristiccResource(s.store, s.broker, s.cache)
 	r.Mount("/characteristics", characteristicsResource.Routes())
 
+	productCharacteristicsResource := resources.NewProductCharacteristicsResource(s.store, s.broker, s.cache)
+	r.Mount("/products/{id}/characteristics", productCharacteristicsResource.Routes())
+
 	return r
 }
 

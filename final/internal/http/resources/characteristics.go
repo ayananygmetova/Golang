@@ -48,7 +48,6 @@ func (cr *CharacteristicsResource) CreateCharacteristics(w http.ResponseWriter, 
 		fmt.Fprintf(w, "Unknown err: %v", err)
 		return
 	}
-
 	if err := cr.store.Characteristics().Create(r.Context(), characteristic); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, "BD err: %v", err)

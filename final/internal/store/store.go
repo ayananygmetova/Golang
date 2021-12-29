@@ -13,6 +13,7 @@ type Store interface {
 	Products() ProductsRepository
 	Properties() PropertiesRepository
 	Characteristics() CharacteristicsRepository
+	ProductCharacteristics() ProductCharacteristicsRepository
 }
 
 type CategoriesRepository interface {
@@ -45,5 +46,11 @@ type CharacteristicsRepository interface {
 	All(ctx context.Context) ([]*models.Characteristics, error)
 	ByID(ctx context.Context, id int) (*models.Characteristics, error)
 	Update(ctx context.Context, characteristic *models.Characteristics) error
+	Delete(ctx context.Context, id int) error
+}
+
+type ProductCharacteristicsRepository interface {
+	Create(ctx context.Context, characteristic *models.ProductCharacteristics) error
+	ByID(ctx context.Context, id int) ([]*models.Characteristics, error)
 	Delete(ctx context.Context, id int) error
 }
